@@ -18,7 +18,9 @@ app.use(cors({
 
 // Serve the index.html page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+  //res.sendFile(path.join(__dirname, 'views', 'index.html'));
+  res.send('Hello World!')
+
 });
 
 // Start the server
