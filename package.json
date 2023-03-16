@@ -1,0 +1,66 @@
+{
+  "name": "m2w_0_00",
+  "version": "1.0.0",
+  "description": "This program facilitates communication between a program written in Java (Open ICE) and a JavaScript server.\r The data transmitted by the OpenIce program is displayed by a Webpage served by the server.",
+  "main": "app.js",
+  "scripts": {
+    "nodemon": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "abbrev": "^1.1.1",
+    "anymatch": "^3.1.2",
+    "balanced-match": "^1.0.2",
+    "binary-extensions": "^2.2.0",
+    "brace-expansion": "^1.1.11",
+    "braces": "^3.0.2",
+    "chokidar": "^3.5.3",
+    "concat-map": "^0.0.1",
+    "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
+    "debug": "^3.2.7",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "fill-range": "^7.0.1",
+    "glob-parent": "^5.1.2",
+    "has-flag": "^3.0.0",
+    "http": "^0.0.1-security",
+    "ignore-by-default": "^1.0.1",
+    "is-binary-path": "^2.1.0",
+    "is-extglob": "^2.1.1",
+    "is-glob": "^4.0.3",
+    "is-number": "^7.0.0",
+    "minimatch": "^3.1.2",
+    "ms": "^2.1.3",
+    "nexe": "^4.0.0-rc.2",
+    "nopt": "^1.0.10",
+    "normalize-path": "^3.0.0",
+    "nw": "^0.72.0",
+    "path": "^0.12.7",
+    "picomatch": "^2.3.1",
+    "prompt-sync": "^4.2.0",
+    "pstree.remy": "^1.1.8",
+    "readdirp": "^3.6.0",
+    "semver": "^5.7.1",
+    "simple-update-notifier": "^1.0.7",
+    "socket.io": "^4.5.4",
+    "supports-color": "^5.5.0",
+    "to-regex-range": "^5.0.1",
+    "touch": "^3.1.0",
+    "undefsafe": "^2.0.5",
+    "ws": "^8.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fillodallas/O2W_Deploy.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Fillodallas/O2W_Deploy/issues"
+  },
+  "homepage": "https://github.com/Fillodallas/O2W_Deploy#readme"
+}

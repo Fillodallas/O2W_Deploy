@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+  <title>Refine2Web</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
+
+  <!-- Favicons -->
+  <link href="/img/favicon.ico" type="image/x-icon" rel="icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet" />
+
+  <!-- Boxicons CDN Link -->
+  <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+
+  <!-- Bootsrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" />
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!--Adding jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <!-- Template Main CSS File -->
+  <link href="/css/style.css" rel="stylesheet" />
+
+  <!-- =======================================================
+    
+    ======================================================== -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body class="toggle-sidebar" onload="getAlarmState(); showCOM();">
+  <!--#region ======= Setting ======= -->
+  <div class="popup">
+    <div class="container h-100">
+      <i class="bi bi-x-circle option-close"></i>
+      <div class="h-100">
+        <!--=== Settings title ===-->
+        <div class="row h-10">
+          <h2>Setting</h2>
+        </div>
+        <!--=== Settings title ===-->
+
+        <!--=== Settings body ===-->
+
+        <!--=== Alarm Toggle ===-->
+        <div class="row h-10">
+          <div class="col">
+            <p style="display: flex!important; align-items: center; justify-content: center; height: 100%;">Alarm:</p>
+          </div>
+
+          <div class="col">
+            <label class="switch">
+              <input class="cb" type="checkbox" id="alarmChecbox" onclick="update_Alarm(this.id)" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <!--=== Alarm Toggle ===-->
+
+        <!--=== Digital Signal Toggle ===-->
+        <div class="row h-10">
+          <div class="col">
+            <p style="display: flex!important; align-items: center; justify-content: center; height: 100%;">COM Signal:
+            </p>
+          </div>
+          <div class="col">
+            <label class="switch">
+              <input class="cb" type="checkbox" id="digitalChecbox" onclick="update_COMState(this.id); showCOM()" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <!--=== Digital Signal Toggle ===-->
+
+        <!--=== GitHub Btn ===-->
+        <div class="row h-10 gitBtn-pos">
+          <div class="col w-10">
+            <a role="button" target="_blank" href="https://github.com/Fillodallas/OpenIce2Web"
+              class="btn fs-mini settings-btn github-btn">
+              <i class="bx bxl-github"></i>
+              GitHub
+            </a>
+          </div>
+        </div>
+        <!--=== GitHub Btn ===-->
+
+        <!--=== Settings body ===-->
+      </div>
+    </div>
+  </div>
+  <!--#endregion ======= End Setting ====== -->
+
+  <!--#region ======= Sidebar ======= -->
+  <div class="sidebar">
+    <div class="logo-details">
+      <img class="icon" alt="website logo" src="/img/logo.png" width="25" height="25" />
+      <div class="logo_name">Refine2Web</div>
+      <i class="bx bx-menu" id="btn"></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <i class="bx bx-search"></i>
+        <input type="text" placeholder="Search..." name="" />
+
+        <span class="tooltip">Search</span>
+      </li>
+      <li>
+        <a href="/">
+          <i class="bx bx-grid-alt"></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+        <span class="tooltip">Dashboard</span>
+      </li>
+      <li>
+        <a href="/monitor">
+          <i class="bx bx-tv"></i>
+          <span class="links_name">Monitor</span>
+        </a>
+        <span class="tooltip">Monitor</span>
+      </li>
+      <li>
+        <a href="/parameters">
+          <i class="bx bx-pie-chart-alt-2"></i>
+          <span class="links_name">Parameters</span>
+        </a>
+        <span class="tooltip">Parameters</span>
+      </li>
+
+      <li class="profile">
+        <a href="#" id="show-login">
+          <i class="bx bx-cog"></i>
+          <span class="links_name">Setting</span>
+        </a>
+        <span class="tooltip">Setting</span>
+      </li>
+    </ul>
+  </div>
+  <!--#endregion ======= End Sidebar ======= -->
+
+  <!-- Page Content-->
+  <main id="main" class="main" style="margin-top: 5px;">
+    <!--#region Page Title -->
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+    <!--#endregion End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <!--#region Left side-->
+        <div class="col-lg-8">
+          <div class="row">
+            <!-- Heart Rate Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+                <header>
+                  <h5 class="card-head">
+                    HEART RATE <span>| </span> <span id="sideHR"> - - </span>
+                  </h5>
+                  <script>
+                    document.getElementById("sideHR").style.display = "none";
+                  </script>
+                  <div class="widget-controls">
+                    <a class="collapsed" data-bs-target="#HR_Body" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-up ms-auto" id="HR_Arrow"></i>
+                    </a>
+                  </div>
+                </header>
+
+                <div class="card-body collapse show" id="HR_Body">
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h2 class="subheading mb-4">
+                        Value:
+                        <a id="sampleHR"> - - </a>
+                      </h2>
+                      <label class="switch">
+                        <input class="cb" type="checkbox" id="HRcheckBox" />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End HR Card -->
+
+            <!-- Po2 Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+                <header>
+                  <h5 class="card-head">
+                    PO2 <span>| </span> <span id="sidePO2"> - - </span>
+                  </h5>
+                  <script>
+                    document.getElementById("sidePO2").style.display = "none";
+                  </script>
+                  <div class="widget-controls">
+                    <a class="collapsed" data-bs-target="#PO2_Body" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-up ms-auto" id="PO2_Arrow"></i>
+                    </a>
+                  </div>
+                </header>
+                <div class="card-body collapse show" id="PO2_Body">
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h2 class="subheading mb-4">
+                        Value:
+                        <a id="samplePO2"> - - </a>
+                      </h2>
+
+                      <label class="switch">
+                        <input class="cb" type="checkbox" id="PO2checkBox" />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Po2 Card -->
+
+            <!-- RR Card -->
+            <div class="col-xxl-4 col-xl-12">
+              <div class="card info-card customers-card">
+                <header>
+                  <h5 class="card-head">
+                    Respiratory Rate <span>| </span>
+                    <span id="sideRR"> - - </span>
+                  </h5>
+                  <script>
+                    document.getElementById("sideRR").style.display = "none";
+                  </script>
+                  <div class="widget-controls">
+                    <a class="collapsed" data-bs-target="#RR_Body" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-up ms-auto" id="RR_Arrow"></i>
+                    </a>
+                  </div>
+                </header>
+                <div class="card-body collapse show" id="RR_Body">
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h2 class="subheading mb-4">
+                        Value:
+                        <a id="sampleCO2RR"> - - </a>
+                      </h2>
+                      <label class="switch">
+                        <input class="cb" type="checkbox" id="RRcheckBox" />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End  Card -->
+          </div>
+
+
+          <div class="container-fluid p-0">
+            <div class="row">
+              <!-- Live Graph Card ShowHide HR/PO2 -->
+              <div class="col-12">
+                <div id="GCardHR" class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Live Graph <span>/ HR</span></h5>
+
+                    <!-- Line Chart -->
+                    <canvas id="HRChart"></canvas>
+                    <!-- Set the graph idden by default-->
+                    <script>
+                      document.getElementById("GCardHR").style.display =
+                        "none";
+                    </script>
+                    <!-- End Line Chart -->
+                  </div>
+                </div>
+
+                <div id="GCardPO2" class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Live Graph <span>/ Po2</span></h5>
+
+                    <!-- Line Chart -->
+                    <canvas id="PO2Chart"></canvas>
+                    <!-- Set the graph idden by default -->
+                    <script>
+                      document.getElementById("GCardPO2").style.display =
+                        "none";
+                    </script>
+
+                    <!-- End Line Chart -->
+                  </div>
+                </div>
+              </div>
+              <!-- End Live Graph Card -->
+
+              <!-- Live Graph Card ShowHide Lead -->
+            </div>
+            <!-- End Live Graph Card -->
+
+
+
+            <!--#region S1 Display-->
+            <div class="col-12 h-25" style="padding:5px 0px 0px 0px;">
+              <div id="S1" class="card h-100">
+                <div class="card-body h-100">
+                  <div class="row h-25">
+                    <h5 class="card-head p-10">Finger BP <span>/ Digital Signal </span></h5>
+                  </div>
+                  <!-- Line Chart -->
+                  <div class="h-75" style="padding-top: 10px;">
+                    <canvas id="S1Chart"></canvas>
+                  </div>
+                  <!-- Set the graph idden by default-->
+
+                  <!-- End Line Chart -->
+                </div>
+              </div>
+            </div>
+            <!--#endregion S1 Display-->
+
+
+            <!--#region S2 Display-->
+            <div class="col-12 h-25" style="padding:25px 0px 0px 0px;">
+              <div id="S2" class="card h-100">
+                <div class="card-body h-100">
+                  <div class="row h-25">
+                    <h5 class="card-head p-10">Brachial BP <span>/ Digital Signal </span></h5>
+                  </div>
+                  <!-- Line Chart -->
+                  <div class="h-75" style="padding-top: 10px;">
+
+                    <canvas id="S2Chart"></canvas>
+
+                  </div>
+                  <!-- Set the graph idden by default-->
+
+                  <!-- End Line Chart -->
+                </div>
+              </div>
+            </div>
+            <!--#endregion S2 Display-->
+
+            <!--#region ECG Lead I Display-->
+            <div class="col-12 h-25" style="padding:25px 0px 0px 0px;">
+              <div id="LeadI" class="card h-100">
+                <div class="card-body h-100">
+                  <div class="row h-25">
+                    <h5 class="card-head p-10">ECG <span>/ Lead I </span></h5>
+                  </div>
+                  <!-- Line Chart -->
+                  <div class="h-75">
+                    <canvas id="lIChart"></canvas>
+                  </div>
+                  <!-- Set the graph idden by default-->
+
+                  <!-- End Line Chart -->
+                </div>
+              </div>
+            </div>
+            <!--#endregion ECG Lead I Display-->
+
+
+            <!--#region COM Digital Signal Display-->
+            <div class="col-12 h-25" style="padding:25px 0px 0px 0px;">
+              <div id="COM" class="card h-100">
+                <div class="card-body h-100">
+                  <div class="row h-25">
+                    <h5 class="card-head p-10">Digital Signal <span>/ COM </span></h5>
+                  </div>
+                  <!-- Line Chart -->
+                  <div class="h-75">
+                    <canvas id="COMChart"></canvas>
+                  </div>
+                  <!-- Set the graph idden by default-->
+
+                  <!-- End Line Chart -->
+                </div>
+              </div>
+            </div>
+            <!--#endregion COM Digital Signal Display-->
+
+
+          </div>
+
+        </div>
+        <!--#endregion left side-->
+
+        <!--#region Right  side -->
+        <div class="col-lg-3">
+          <!-- Other Parameters -->
+          <div class="card">
+            <header>
+              <h5 class="card-head">
+                Parameters<span> | </span> <span id="sideSide"> </span>
+              </h5>
+              <script>
+                document.getElementById("sideSide").style.display = "none";
+              </script>
+              <div class="widget-controls">
+                <a class="collapsed" data-bs-target="#Side_Body" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-up ms-auto" id="Side_Arrow"></i>
+                </a>
+              </div>
+            </header>
+            <div class="card-body collapse show" id="Side_Body">
+              <!-- AWAY CO2 -->
+              <div class="ps-3">
+                <h5 class="card-title">AWAY CO2 <span>|</span></h5>
+                <h2 class="subheading mb-4" id="sampleAWCO2">
+                  - -
+                  <!--
+                              <a id="sampleAWCO2"> - - </a>
+                              -->
+                </h2>
+              </div>
+              <!-- END AWAY CO2-->
+
+              <!-- PRESS_BLD_ART_ABP_SYS -->
+              <div class="ps-3">
+                <h5 class="card-title">SYS PRESS <span>|</span></h5>
+                <h2 class="subheading mb-4" id="samplepPSYS">
+                  - -
+                  <!--
+                              <a id="sampleAWCO2"> - - </a>
+                              -->
+                </h2>
+              </div>
+              <!-- END PRESS_BLD_ART_ABP_SYS-->
+
+              <!-- MDC_PRESS_BLD_ART_ABP_DIA -->
+              <div class="ps-3">
+                <h5 class="card-title">DIA PRESS <span>|</span></h5>
+                <h2 class="subheading mb-4" id="samplePDIA">
+                  - -
+                  <!--
+                              <a id="sampleAWCO2"> - - </a>
+                              -->
+                </h2>
+              </div>
+              <!-- END MDC_PRESS_BLD_ART_ABP_DIA-->
+
+              <!-- MDC_PULS_OXIM_PULS_RATE -->
+              <div class="ps-3">
+                <h5 class="card-title">PULS OXIM<span>| PULS RATE</span></h5>
+                <h2 class="subheading mb-4" id="samplePOPR">
+                  - -
+                  <!--
+                              <a id="sampleAWCO2"> - - </a>
+                              -->
+                </h2>
+              </div>
+              <!-- END MDC_PULS_OXIM_PULS_RATE-->
+
+              <!-- MDC_TTHOR_RESP_RATE -->
+              <div class="ps-3">
+                <h5 class="card-title">TTHOR <span>|RESP RATE</span></h5>
+                <h2 class="subheading mb-4" id="sampleTTRR">
+                  - -
+                  <!--
+                              <a id="sampleAWCO2"> - - </a>
+                              -->
+                </h2>
+              </div>
+              <!-- END MDC_TTHOR_RESP_RATE-->
+            </div>
+            <!-- End Recent Activity -->
+          </div>
+        </div>
+        <!--#endregion  rigth side -->
+      </div>
+
+
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    var exports = {};
+  </script>
+  <script src="js/main.js"></script>
+  <script src="js/functions.js"></script>
+  <script src="config/safetyParam.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+  <!-- Socket Connection-->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script type="text/javascript">
+
+    var HOST = self.location.host;
+    var socket = io(HOST);
+
+    //#region Graphs Initialization
+
+    //#region Single values Graph
+
+    //#region Grafico RR
+    /*
+  const rrx = document.getElementById('RRChart');
+  const RRChart = new Chart(rrx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: 'RR',
+          data: [], //index[0]//
+          borderWidth: 1,
+          tension: 0.1, //this is the smoothness
+          showLine: true,
+          spanGaps: true
+        }
+
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  */
+    //#endregion Grafico RR
+
+    //#region Grafico PO2
+    const po2x = document.getElementById("PO2Chart");
+    const PO2Chart = new Chart(po2x, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "PO2",
+            data: [], //index[0]//
+            borderWidth: 1,
+            tension: 0.1, //this is the smoothness
+            showLine: true,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        animation: {
+          duration: 500,
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+
+            //
+          },
+        },
+        resizeDelay: 500,
+      },
+    });
+    //#endregion Grafico PO2
+
+    //#region Grafico HR
+    const hrx = document.getElementById("HRChart");
+    const HRChart = new Chart(hrx, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "HR",
+            data: [], //index[0]//
+            borderWidth: 1,
+            tension: 0.1, //this is the smoothness
+            showLine: true,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        animation: {
+          duration: 0,
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    //#endregion Grafico HR
+
+    //#endregion Single values Graph
+
+    //#region Live Wave Graphs
+
+    //#region ECG Lead I
+    const lIECG = document.getElementById("lIChart");
+    const lIChart = new Chart(lIECG, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "ECG Lead I",
+            data: [], //index[0]//
+            borderWidth: 2.5,
+            borderColor: "#CC0000",
+            tension: 0.5, //this is the smoothness
+            showLine: true,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        resizeDelay: 0,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        animation: {
+          duration: 0,
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            display: false,
+          },
+
+          x: {
+            display: false,
+          },
+        },
+        elements: {
+          point: {
+            radius: 0,
+          },
+        },
+      },
+    });
+    //#endregion ECG Lead I
+
+    //#region Digital Signal
+    const COMd = document.getElementById("COMChart");
+    const COMChart = new Chart(COMd, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "Digital Signal",
+            data: [], //index[0]//
+            borderWidth: 1,
+            borderColor: "#CC0000",
+            tension: 0.1, //this is the smoothness
+            showLine: true,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        resizeDelay: 0,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        animation: {
+          duration: 0,
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            display: false,
+          },
+
+          x: {
+            display: false,
+          },
+        },
+        elements: {
+          point: {
+            radius: 0,
+          },
+        },
+      },
+    });
+    //#endregion ECG Lead I
+
+    //#region S1
+    const S1 = document.getElementById("S1Chart");
+    const S1Chart = new Chart(S1, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "S1",
+            data: [], //index[0]//
+            borderWidth: 2.5,
+            borderColor: "#CC0000",
+            tension: 0.1, //this is the smoothness
+            showLine: true,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        animation: {
+          duration: 0,
+        },
+        scales: {
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: ' BP [mmHG]',
+              color: '#F4F4F5E6'
+            },
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#F4F4F5E6'
+            }
+          },
+          x: {
+            display: false,
+            grid: {
+              display: false
+            }
+          },
+        },
+        elements: {
+          point: {
+            radius: 0,
+          },
+        },
+      },
+    });
+
+    //#endregion S1
+
+    //#region S2
+    const S2 = document.getElementById("S2Chart");
+    const S2Chart = new Chart(S2, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "S2",
+            data: [], //index[0]//
+            borderWidth: 2.5,
+            borderColor: "#CC0000",
+            tension: 0.1, //this is the smoothness
+            showLine: true,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        animation: {
+          duration: 0,
+        },
+        scales: {
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: ' BP [mmHG]',
+              color: '#F4F4F5E6'
+            },
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#F4F4F5E6'
+            }
+          },
+          x: {
+            display: false,
+            grid: {
+              display: false
+            }
+          },
+        },
+        elements: {
+          point: {
+            radius: 0,
+          },
+        },
+      },
+    });
+    //#endregion S1
+
+    //#endregion Live Wave Graphs
+
+    //#endregion Graphs Initialization
+
+    //#region Sezione ricezione e sorting dati
+
+    var vlHR;
+
+    socket.on("data", function (data) {
+      //listen for an event called data, when data event happens it runs this function
+
+      msg = data.toString();
+      var arr = msg.split(":");
+      var arrRR;
+      var timHR, timRR;
+      var NIDQGraphData = 500 //NUmber of data points after which the graph will start scrolling
+      const d = new Date();
+
+      // arr[0] è il metricID
+      // arr[1] è il valore letto
+      // arr[2] è il tempo
+
+      //#region Data distribution
+      switch (arr[0]) {
+        //#region Single data sorting
+
+        case "MDC_CO2_RESP_RATE": // RR
+          saveLimRR(arr[1], localStorage.getItem("RR_Lowest"), localStorage.getItem("RR_Lower"), localStorage.getItem("RR_Higer"), localStorage.getItem("RR_Highest") )
+          document.getElementById("sampleCO2RR").innerHTML = arr[1];
+          document.getElementById("sideRR").innerHTML = arr[1];
+
+          // Obtain the Integer value and the time value to be graphed
+          vlRR = parseInt(arr[1]);
+          timRR = extracDate(arr[2]);
+          //(vlRR + " " + timRR)
+          //setInterval(reLoad(RRChart, vlPO2, timPO2, 15), 1000);
+
+          break;
+
+        case "MDC_AWAY_CO2_ET": //AWCO2
+          document.getElementById("sampleAWCO2").innerHTML = arr[1];
+
+          break;
+
+        case "MDC_PRESS_BLD_ART_ABP_SYS": // PSYS
+          document.getElementById("samplepPSYS").innerHTML = arr[1];
+
+          break;
+
+        case "MDC_PRESS_BLD_ART_ABP_DIA": // PDIA
+          document.getElementById("samplePDIA").innerHTML = arr[1];
+
+          break;
+
+        case "MDC_PULS_OXIM_SAT_O2": // PO2
+          saveLimSpO2(arr[1], localStorage.getItem("SPo2_Min"), localStorage.getItem("SPo2_Max"))
+          document.getElementById("samplePO2").innerHTML = arr[1];
+          document.getElementById("sidePO2").innerHTML = arr[1];
+          var vlPO2 = parseFloat(arr[1]);
+          var timPO2 = extracDate(arr[2]);
+          setInterval(reLoad(PO2Chart, vlPO2, timPO2, 15), 1000);
+
+          break;
+
+        case "MDC_PULS_OXIM_PULS_RATE": //  POPR
+          document.getElementById("samplePOPR").innerHTML = arr[1];
+          break;
+
+        case "MDC_ECG_HEART_RATE": // HR
+          //Get the data from the array when recive HR sample
+          document.getElementById("sampleHR").innerHTML = arr[1];
+          document.getElementById("sideHR").innerHTML = arr[1];
+
+          // Obtain the Floating value and the time value to be graphed
+
+          vlHR = parseFloat(arr[1]);
+          timHR = extracDate(arr[2]);
+          setInterval(reLoad(HRChart, vlHR, timHR, 15), 1000);
+
+          break;
+
+        case "MDC_TTHOR_RESP_RATE": // TTRR
+          document.getElementById("sampleTTRR").innerHTML = arr[1];
+          break;
+
+        case "COM": //Digital Signal 
+
+          vlCOM = parseFloat(arr[1]);
+          timCOM = d.getTime();
+          setInterval(reLoad(COMChart, vlCOM, timCOM, 10000), 2000);
+          break;
+
+        //#endregion Single data sorting
+
+        //#region Waveform data sorting
+
+        case "MDC_AWAY_CO2SIM":
+          arr = maptoNum(arr[1]);
+          Lab = Array.from(Array(arr.length).keys());
+
+          break;
+
+        case "MDC_ECG_LEAD_ISIM":
+          arr = maptoNum(arr[1]);
+          Lab = Array.from(Array(arr.length).keys());
+          setInterval(reLoad(lIChart, arr, Lab, 200), 800);
+          break;
+
+        case "MDC_ECG_LEAD_IISIM":
+          break;
+
+        case "MDC_ECG_LEAD_IIISIM":
+          arr = maptoNum(arr[1]);
+          //console.log(arr);
+
+          break;
+
+        case "MDC_PRESS_BLD_ART_ABPSIM":
+          arr = maptoNum(arr[1]);
+          Lab = Array.from(Array(arr.length).keys());
+
+          break;
+
+        case "MDC_PULS_OXIM_PLETHSIM":
+          arr = maptoNum(arr[1]);
+          Lab = Array.from(Array(arr.length).keys());
+
+          break;
+
+        case "S1":
+
+          arr1 = maptoNum(arr[1]);
+          Lab1 = Array.from(Array(arr1.length).keys());
+          (reLoad(S1Chart, arr1, Lab1, NIDQGraphData), 1000);
+          break;
+
+        case "S2":
+          arr2 = maptoNum(arr[1]);
+          Lab2 = Array.from(Array(arr2.length).keys());
+          (reLoad(S2Chart, arr2, Lab2, NIDQGraphData), 1000);
+          break;
+
+        //#endregion Waveform data sorting
+      }
+      //#endregion Data distribution
+    });
+
+    //#endregion Sezione ricezione dati
+
+    //#region Function Section
+
+    ///////Toggle Init \\\\\\\\\\\
+
+    toggleBTNs("HRcheckBox", "GCardHR");
+    toggleBTNs("PO2checkBox", "GCardPO2");
+    toggleBTNs("RRcheckBox", "GCardRR");
+
+    checkCollapse("RR_Body", "sideRR", "RR_Arrow");
+    checkCollapse("HR_Body", "sideHR", "HR_Arrow");
+    checkCollapse("PO2_Body", "sidePO2", "PO2_Arrow");
+    checkCollapse("Side_Body", "sideSide", "Side_Arrow");
+
+    setInterval(function () {
+      isToggled("alarmChecbox");
+    }, 500);
+
+      //#endregion Function Section
+
+  </script>
+</body>
+
+</html>
