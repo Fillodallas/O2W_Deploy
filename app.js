@@ -8,11 +8,12 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3030;
 
 // Allow cross-origin resource sharing
-app.use(cors());
-
+app.use(cors({
+  origin: "*",
+}));
 // Serve the index.html page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
